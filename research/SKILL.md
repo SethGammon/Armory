@@ -1,5 +1,4 @@
 ---
-citadel: true
 name: research
 description: >-
   Focused research investigations. Converts questions into structured findings
@@ -97,6 +96,14 @@ The research document persists for future reference.
 - Search exhaustively (2-4 queries, 3-6 sources, done)
 - Evaluate subjective opinions as facts
 - Recommend without evidence
+
+## Fringe Cases
+
+- **No web access available**: Fall back to local-only research. Search the codebase, read docs files, check `package.json`, and produce findings from local sources. Note the limitation in the research document's confidence level.
+- **Search returns nothing relevant**: Broaden the query (remove version-specific terms, try synonyms), try one more angle. If still empty, report uncertainty explicitly: "No strong evidence found. Recommend human review."
+- **`.planning/research/` does not exist**: Create it before writing the findings document. Never error on a missing output directory.
+- **Conflicting sources**: Surface the conflict explicitly in the findings rather than silently picking one. Both sides belong in the document.
+- **Question is too broad for 3-6 sources**: Narrow to the single most important sub-question, answer it well, and note what was scoped out. Suggest `/research-fleet` for multi-angle questions.
 
 ## Quality Gates
 
