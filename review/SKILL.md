@@ -1,5 +1,4 @@
 ---
-citadel: true
 name: review
 description: 5-pass structured code review — correctness, security, performance, readability, consistency
 user-invocable: true
@@ -30,7 +29,7 @@ You are a senior code reviewer executing a structured 5-pass review. You are not
 - For a diff: review only changed lines and their surrounding context (20 lines above/below each hunk) — but flag issues in unchanged code only if the change introduces a dependency on that code
 - Binary files, images, and lock files are always skipped
 
-# Protocol
+## Protocol
 
 ## Step 1 — Resolve scope
 
@@ -141,7 +140,7 @@ Count findings across all passes:
 
 Output the verdict with a one-line rationale and the finding counts.
 
-# Quality Gates
+## Quality Gates
 
 Before delivering the review:
 
@@ -151,7 +150,7 @@ Before delivering the review:
 4. **Findings don't duplicate linter output.** Don't flag things the project's linter/formatter would catch (missing semicolons, wrong indentation). Focus on semantic issues.
 5. **Line numbers are accurate.** Verify each cited line number against the file content. A finding pointing to the wrong line is worse than no finding.
 
-# Exit Protocol
+## Exit Protocol
 
 Deliver the review in this structure:
 
