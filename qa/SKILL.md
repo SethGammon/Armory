@@ -1,5 +1,4 @@
 ---
-citadel: true
 name: qa
 description: >-
   Browser-based QA verification. Launches a real browser, navigates the app,
@@ -199,3 +198,27 @@ If Playwright isn't installed and the user declines installation:
 - Screenshots are taken for every flow (pass or fail)
 - Failed flows have enough detail to reproduce the issue
 - The app is actually running before tests execute (not testing a dead server)
+
+## Fringe Cases
+
+**Playwright not installed and user declines**: Fall back to /live-preview. Mark all interaction tests as SKIPPED in the report. Visual-only verification still runs.
+
+**Dev server won't start**: Report the startup error and stop. Do not attempt to test a server that isn't running. Suggest the user fix the startup error first.
+
+**No routes or pages discoverable**: Ask the user for 1-3 flows to test. Do not guess at routes.
+
+**No UI (API-only project)**: Report "No UI detected — /qa requires a browser-accessible interface. Use typecheck and unit tests for API verification." Then stop gracefully.
+
+**If .planning/screenshots/ does not exist**: Create it before saving screenshots. If `.planning/` doesn't exist, save screenshots to a `qa-screenshots/` directory in the project root and note the path in the report.
+
+## Exit Protocol
+
+```
+---HANDOFF---
+- QA Report: .planning/qa-report-{date}.md
+- Flows tested: {N}
+- Passed: {N} | Failed: {N} | Skipped: {N}
+- Screenshots: .planning/screenshots/qa-*.png
+- Server: {started by agent (killed) | was already running (left running)}
+---
+```
