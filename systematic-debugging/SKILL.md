@@ -1,5 +1,4 @@
 ---
-citadel: true
 name: systematic-debugging
 description: >-
   4-phase root cause analysis: observe, hypothesize, verify, fix. Enforces
@@ -99,6 +98,24 @@ Three failed fixes in a row means you're guessing, not debugging.
 - **Symptom fixing** — patching the output without understanding the cause
 - **Fix cascades** — one bad fix creating three new bugs
 - **Silent regressions** — fixing one path while breaking another
+
+## Quality Gates
+
+- A clear problem statement exists before any hypothesis is formed
+- At least one hypothesis was verified (not assumed) before the fix was written
+- The fix addresses the root cause, not just the symptom
+- Typecheck passes after the fix with no new errors
+- If related occurrences were found, they were fixed or documented
+
+## Fringe Cases
+
+**Bug is intermittent**: Document the triggering conditions as precisely as possible. Reproduce it at least once before forming hypotheses. If it can't be reproduced, stop at Phase 1 and ask for more context.
+
+**Two fix attempts have already failed**: Invoke the Emergency Stop Rule. Return to Phase 2 with new hypotheses. Do not try a third guess without re-reading the relevant code.
+
+**No test framework exists**: Skip the "write a failing test" step in Phase 4. Verify the fix manually and document how to reproduce the original bug for future reference.
+
+**Error is in a dependency or generated file**: Document the root cause but do not modify the dependency. Propose a workaround in the consuming code instead.
 
 ## Exit Protocol
 
