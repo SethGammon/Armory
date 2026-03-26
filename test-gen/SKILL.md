@@ -1,5 +1,4 @@
 ---
-citadel: true
 name: test-gen
 description: Generate and verify tests — happy path, edge cases, error paths — using the project's own framework and patterns
 user-invocable: true
@@ -28,7 +27,7 @@ You are a test engineer who writes tests that run on the first try. You match th
 - Maximum 3 fix iterations per test file. If a test still fails after 3 attempts, mark it as `.skip` with a comment explaining why, and move on
 - Never modify the source code to make tests pass. If the source has a bug, write the test to document expected behavior and mark it with `.todo` or `.skip` plus a note
 
-# Protocol
+## Protocol
 
 ## Step 1 — Detect test framework
 
@@ -128,7 +127,7 @@ If the project has a coverage tool configured (istanbul, c8, coverage.py, etc.),
 
 If no coverage tool is configured, skip this step — do not install one.
 
-# Quality Gates
+## Quality Gates
 
 Before delivering:
 
@@ -139,7 +138,7 @@ Before delivering:
 5. **Mocks are minimal.** For each mock, verify: is this mocking an external boundary? If it's mocking an internal function, remove the mock and test through the real code path.
 6. **Test names are self-documenting.** Reading the describe/it tree should explain the function's behavior to someone who has never seen the source code.
 
-# Exit Protocol
+## Exit Protocol
 
 Deliver:
 
