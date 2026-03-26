@@ -1,5 +1,4 @@
 ---
-citadel: true
 name: triage
 description: >-
   GitHub issue and PR investigator. Pulls open issues/PRs, classifies them, searches
@@ -276,6 +275,7 @@ Steps:
 4. Commit with message: `fix: <description> (closes #<number>)`
 5. Push and open PR linking the issue
 6. Comment on the issue with the PR link
+7. Output the auto-fix handoff block (see Auto-fix Handoff section below)
 
 **Comment with findings** (when fix needs discussion or user input):
 1. Post a structured comment on the issue with:
@@ -325,6 +325,22 @@ Apply these labels via `$GH issue edit <number> --add-label "<label>"`:
 - `wont-fix` — intentional behavior or out of scope
 - `duplicate` — duplicate of another issue
 
+## Auto-fix Handoff
+
+Whenever a PR is pushed (Phase 5 Auto-fix), output this block so the user can hand
+off CI watching to local or cloud auto-fix:
+
+```
+---PR READY---
+PR #<N>: <url>
+
+To watch this PR automatically:
+  Local  →  /pr-watch <N>          watches CI, fixes failures, runs in this terminal
+  Cloud  →  open in Claude Code web or mobile, toggle "Auto fix" ON
+            (fixes CI failures and review comments remotely; requires Claude GitHub App)
+---
+```
+
 ## Quality Gates
 
 - [ ] Every investigated issue has a classification (type + severity for bugs)
@@ -333,6 +349,16 @@ Apply these labels via `$GH issue edit <number> --add-label "<label>"`:
 - [ ] Every PR links to the issue it fixes
 - [ ] Every issue comment is structured and actionable (no "I'll look into this")
 - [ ] No issue is left without at least a label or comment
+
+## Fringe Cases
+
+**gh CLI not available or not authenticated**: Run `gh auth status` in Phase 0. If gh is not installed or not authenticated, stop and instruct the user: "Run `gh auth login` before using /triage." Do not attempt API calls without a working gh session.
+
+**No open issues or PRs**: Report "No open issues found." and exit cleanly. Do not error.
+
+**Issue body is empty or unparseable**: Classify as `needs-info`. Comment asking the reporter to provide reproduction steps and error details.
+
+**If .planning/ does not exist**: /triage does not require .planning/ to function — it reads from GitHub, not local state. Skip any .planning/ writes if the directory doesn't exist.
 
 ## Anti-Patterns — Do NOT
 
