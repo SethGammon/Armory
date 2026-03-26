@@ -1,5 +1,4 @@
 ---
-citadel: true
 name: refactor
 description: >-
   Safe multi-file refactoring with automatic rollback. Establishes a type/test
